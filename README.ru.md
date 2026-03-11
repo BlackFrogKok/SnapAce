@@ -59,6 +59,7 @@
 </p>
 
 ## Поддержать проект
-<p align="center"> 
+<p> 
+  <a href="https://boosty.to/blackfrogkok/donate" target="_blank"> <img src="https://gideonwhite1029.github.io/badges/cozy-boosty_vector.svg"/> </a>
   <a href="https://ko-fi.com/blackfrogkok" target="_blank"> <img src="https://ko-fi.com/img/githubbutton_sm.svg"/> </a> 
 </p>

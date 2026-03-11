@@ -78,6 +78,8 @@ class BunnyAce:
                     'status': 'empty1',
                     'sku': '',
                     'type': '',
+                    'rfid': 0,
+                    'brand':'',
                     'color': [0, 0, 0]
                 },
                 {
@@ -85,6 +87,8 @@ class BunnyAce:
                     'status': 'empty1',
                     'sku': '',
                     'type': '',
+                    'rfid': 0,
+                    'brand': '',
                     'color': [0, 0, 0]
                 },
                 {
@@ -92,6 +96,8 @@ class BunnyAce:
                     'status': 'empty1',
                     'sku': '',
                     'type': '',
+                    'rfid': 0,
+                    'brand': '',
                     'color': [0, 0, 0]
                 },
                 {
@@ -99,6 +105,8 @@ class BunnyAce:
                     'status': 'empty1',
                     'sku': '',
                     'type': '',
+                    'rfid': 0,
+                    'brand': '',
                     'color': [0, 0, 0]
                 }
             ]
@@ -171,6 +179,9 @@ class BunnyAce:
         self.save_variables.allVariables[variable] = value
         if write:
             self.write_variables()
+
+    def rgb2hex(self, r, g, b):
+        return "%02X%02X%02X" % (r, g, b)
 
     def delete_variable(self, variable, write=False):
         _ = self.save_variables.allVariables.pop(variable, None)
@@ -293,18 +304,28 @@ class BunnyAce:
         def callback(self, response):
             if response is not None:
                 for i in range(4):
-                    if self._info['slots'][i]['status'] == 'empty' and response['result']['slots'][i]['status'] != 'empty':
-                        self.log_always(f"{self._info['slots'][i]['status']}, "
-                                        f"{response['result']['slots'][i]['status']} 1")
+                    if self.gate_status[i] == GATE_EMPTY and response['result']['slots'][i]['status'] != 'empty':
                         self.log_always('auto_feed')
                         self.reactor.register_async_callback(
                             (lambda et, c=self._pre_load, gate=i: c(gate)))
+
+                    if response['result']['slots'][i]['rfid'] == 2 and self._info['slots'][i]['rfid'] != 2:
+                        self.log_always('find_rfid')
+                        spool_inf = response['result']['slots'][i]
+                        self.log_always(str(spool_inf))
+                        self.gcode.run_script_from_command(f'SET_PRINT_FILAMENT_CONFIG '
+                                                           f'CONFIG_EXTRUDER={i} '
+                                                           f'FILAMENT_TYPE="{spool_inf.get("type", "PLA")}" '                                               
+                                                           f'FILAMENT_COLOR_RGBA={self.rgb2hex(*spool_inf.get("color", (0,0,0)))} '
+                                                           f'VENDOR="{spool_inf.get("brand", "Generic")}" '
+                                                           f'FILAMENT_SUBTYPE=""')
+                    self.gate_status[i] = GATE_EMPTY if response['result']['slots'][i]['status'] == 'empty' \
+                        else GATE_AVAILABLE
                 self._info = response['result']
-                self.gate_status = [GATE_EMPTY if data['status'] == 'empty' else GATE_AVAILABLE
-                                    for data in self._info['slots']]
+
 
         self.send_request({"method": "get_status"}, callback)
-        return eventtime + 2.5
+        return eventtime + 1
 
     def _reader_cb(self, eventtime):
         try:

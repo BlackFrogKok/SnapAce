@@ -58,6 +58,7 @@ This project provides integration of the Anycubic ACE PRO with the Snapmaker U1 
 </p>
 
 ## Support me
-<p align="center"> 
-  <a href="https://ko-fi.com/blackfrogkok" target="_blank"> <img src="https://ko-fi.com/img/githubbutton_sm.svg"/> </a> 
+<p> 
+  <a href="https://boosty.to/blackfrogkok/donate" target="_blank"> <img src="https://gideonwhite1029.github.io/badges/cozy-boosty_vector.svg"/> </a>
+  <a href="https://ko-fi.com/blackfrogkok" target="_blank"> <img src="https://ko-fi.com/img/githubbutton_sm.svg"/> </a>
 </p>
