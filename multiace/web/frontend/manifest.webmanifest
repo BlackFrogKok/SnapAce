@@ -1,0 +1,14 @@
+{
+  "name": "mUlt1ACE",
+  "short_name": "mUlt1ACE",
+  "description": "mUlt1ACE - multiple Anycubic ACE Pro filament changers for Snapmaker U1",
+  "start_url": "/multiace/",
+  "scope": "/multiace/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#15bdc6",
+  "background_color": "#1a1a1a",
+  "icons": [
+    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
+  ]
+}

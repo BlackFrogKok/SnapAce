@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Third-party firmware images
+    url: https://github.com/decay71/multiACE#supported-builds
+    about: >
+      If multiACE came bundled with a firmware image you did not install
+      yourself, please report to the maintainer of that image. Fixes released
+      here do not reach those builds.

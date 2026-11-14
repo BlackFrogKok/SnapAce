@@ -1,0 +1,13 @@
+# multiACE Web - allow the lava user to:
+#   1. toggle /oem/.debug from the Update card (controls S01aoverlayfs
+#      wiping /oem/overlay/upper at boot; without persistence the
+#      updater can't actually keep installs)
+#   2. run the in-place updater as root (klipper extras dir is
+#      root-owned via the Snapmaker firmware image, so install_multiace.sh
+#      must run as root to cp into /home/lava/klipper/klippy/extras)
+#
+# Surface is two narrow commands. No wildcards on the debug toggle.
+# Install path: /etc/sudoers.d/multiace-debug, mode 0440, owned by root.
+
+lava ALL=(root) NOPASSWD: /usr/bin/touch /oem/.debug, /bin/rm -f /oem/.debug
+lava ALL=(root) NOPASSWD: /home/lava/multiace_update.sh, /home/lava/multiace/tools/multiace_update.sh
